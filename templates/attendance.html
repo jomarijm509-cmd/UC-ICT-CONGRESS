@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Attendance{% endblock %}
+{% block content %}
+<h1>Attendance</h1>
+
+<form class="inline-form" method="POST">
+    <label for="idNum">Input ID #</label>
+    <input type="text" id="idNum" name="idNum" placeholder="e.g. 2345678" autofocus required>
+    <button type="submit" class="btn btn-primary">Check In</button>
+</form>
+
+{% if message %}
+<div class="prompt prompt-{{ message_type }}">
+    {{ message }}
+    {% if checked_student %}
+        <div class="prompt-detail">
+            {{ checked_student.studFName }} {{ checked_student.studLName }} &middot; {{ checked_student.campus }}
+        </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<h2 class="section-title">Recorded Attendees</h2>
+<div class="table-wrap">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID #</th>
+            <th>Name</th>
+            <th>Campus</th>
+            <th>Amount</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for a in attendees %}
+        <tr>
+            <td class="mono">{{ a.idNum }}</td>
+            <td>{{ a.studLName }}, {{ a.studFName }}</td>
+            <td><span class="chip">{{ a.campus }}</span></td>
+            <td class="mono">{{ "%.2f"|format(a.amountPaid) }}</td>
+            <td><span class="badge badge-yes">Attended</span></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty-row">No attendance recorded yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

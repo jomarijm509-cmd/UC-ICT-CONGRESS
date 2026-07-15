@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Raffle{% endblock %}
+{% block content %}
+<h1>Raffle</h1>
+
+<form method="POST" class="filter-bar">
+    <span class="filter-label">Set filters here:</span>
+    {% for c in campuses %}
+    <label class="checkbox">
+        <input type="checkbox" name="campus" value="{{ c }}" {% if c in selected_campuses %}checked{% endif %}>
+        {{ c }}
+    </label>
+    {% endfor %}
+    <button type="submit" name="reveal" value="1" class="btn btn-primary">Reveal the Lucky Winner!</button>
+</form>
+
+{% if error %}
+<div class="prompt prompt-error">{{ error }}</div>
+{% endif %}
+
+{% if winner %}
+<div class="raffle-card">
+    <table class="data-table winner-table">
+        <thead>
+            <tr><th>ID #</th><th>Name</th><th>Campus</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="mono">{{ winner.idNum }}</td>
+                <td>{{ winner.studFName }} {{ winner.studLName }}</td>
+                <td>{{ winner.campus }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="congrats">CONGRATULATIONS!!!</p>
+</div>
+{% endif %}
+{% endblock %}

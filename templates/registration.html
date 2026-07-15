@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Registration{% endblock %}
+{% block content %}
+<div class="panel-head">
+    <h1>Registration</h1>
+    <a class="btn btn-primary" href="{{ url_for('add_student') }}">+ Register a Student</a>
+</div>
+
+<div class="table-wrap">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID #</th>
+            <th>Name</th>
+            <th>Campus</th>
+            <th>Amount</th>
+            <th>Attended</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td class="mono">{{ s.idNum }}</td>
+            <td>{{ s.studLName }}, {{ s.studFName }}</td>
+            <td><span class="chip">{{ s.campus }}</span></td>
+            <td class="mono">{{ "%.2f"|format(s.amountPaid) }}</td>
+            <td>
+                {% if s.attended == 'Yes' %}
+                    <span class="badge badge-yes">Yes</span>
+                {% else %}
+                    <span class="badge badge-no">No</span>
+                {% endif %}
+            </td>
+            <td class="actions">
+                <a class="link-action" href="{{ url_for('edit_student', idNum=s.idNum) }}">Edit</a>
+                <form method="POST" action="{{ url_for('delete_student', idNum=s.idNum) }}" onsubmit="return confirm('Remove {{ s.studFName }} {{ s.studLName }} from the registration list?');" style="display:inline;">
+                    <button type="submit" class="link-action link-danger">Del</button>
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6" class="empty-row">No students registered yet. Use "Register a Student" to add the first one.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

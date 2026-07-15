@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Report by Campus{% endblock %}
+{% block content %}
+<h1>Report (By Campus)</h1>
+
+<form method="POST" class="filter-bar">
+    <span class="filter-label">Set filters here:</span>
+    {% for c in campuses %}
+    <label class="checkbox">
+        <input type="checkbox" name="campus" value="{{ c }}" {% if c in selected_campuses %}checked{% endif %}>
+        {{ c }}
+    </label>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+</form>
+
+{% if generated %}
+<div class="table-wrap">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID #</th>
+            <th>Name</th>
+            <th>Campus</th>
+            <th>Amount</th>
+            <th>Attended</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in rows %}
+        <tr>
+            <td class="mono">{{ r.idNum }}</td>
+            <td>{{ r.studLName }}, {{ r.studFName }}</td>
+            <td><span class="chip">{{ r.campus }}</span></td>
+            <td class="mono">{{ "%.2f"|format(r.amountPaid) }}</td>
+            <td>
+                {% if r.attended == 'Yes' %}
+                <span class="badge badge-yes">Yes</span>
+                {% else %}
+                <span class="badge badge-no">No</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="empty-row">No records match the selected filter.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<div class="report-footer">
+    <p># of Registrants: <strong>{{ num_registrants }}</strong> &middot; Total Collection: <strong>{{ "%.2f"|format(total_collection) }}</strong></p>
+    <p># of Attendees: <strong>{{ num_attendees }}</strong> &middot; Date Generated: <strong>{{ today }}</strong></p>
+</div>
+{% endif %}
+{% endblock %}

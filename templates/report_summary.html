@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Report Summary{% endblock %}
+{% block content %}
+<h1>Report (Summary)</h1>
+<p class="hero-sub">Summary Report &middot; All Campuses</p>
+
+<div class="table-wrap">
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Campus</th>
+            <th>Registered</th>
+            <th>Attended</th>
+            <th>Total Collection</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in summary %}
+        <tr>
+            <td><span class="chip">{{ s.campus }}</span></td>
+            <td class="mono">{{ s.registered }}</td>
+            <td class="mono">{{ s.attended }}</td>
+            <td class="mono">{{ "%.2f"|format(s.collection) }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="totals-row">
+            <td>TOTALS</td>
+            <td class="mono">{{ total_registered }}</td>
+            <td class="mono">{{ total_attended }}</td>
+            <td class="mono">{{ "%.2f"|format(total_collection) }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="report-footer">
+    <p>Date Generated: <strong>{{ today }}</strong></p>
+</div>
+{% endblock %}

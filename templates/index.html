@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Menu{% endblock %}
+{% block content %}
+<section class="hero">
+    <span class="eyebrow">Skills Test &middot; November 2023</span>
+    <h1>Choose your transaction</h1>
+    <p class="hero-sub">Pick a module below to manage congress registrations, record attendance, run the raffle, or generate reports.</p>
+</section>
+
+<nav class="menu-grid">
+    <a class="menu-card" href="{{ url_for('registration') }}">
+        <span class="menu-index">01</span>
+        <span class="menu-label">Registration</span>
+        <span class="menu-desc">Add, edit, and remove student registrations.</span>
+    </a>
+    <a class="menu-card" href="{{ url_for('attendance') }}">
+        <span class="menu-index">02</span>
+        <span class="menu-label">Attendance</span>
+        <span class="menu-desc">Check in a student by ID number.</span>
+    </a>
+    <a class="menu-card" href="{{ url_for('raffle') }}">
+        <span class="menu-index">03</span>
+        <span class="menu-label">Raffle</span>
+        <span class="menu-desc">Reveal a lucky winner among attendees.</span>
+    </a>
+    <a class="menu-card" href="{{ url_for('report_campus') }}">
+        <span class="menu-index">04</span>
+        <span class="menu-label">Report (By Campus)</span>
+        <span class="menu-desc">Filter registrations by campus.</span>
+    </a>
+    <a class="menu-card" href="{{ url_for('report_summary') }}">
+        <span class="menu-index">05</span>
+        <span class="menu-label">Report (Summary)</span>
+        <span class="menu-desc">Totals across all campuses.</span>
+    </a>
+</nav>
+{% endblock %}
